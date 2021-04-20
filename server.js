@@ -28,7 +28,7 @@ app.post('/api', function(req, res) {
         });
     })
     .catch(function(error) {
-        console.log('trusted number')
+        console.log('you entered a trusted number')
         res.json(error);
     });
 });

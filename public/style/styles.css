@@ -1,0 +1,18 @@
+body{
+    background-color: #FBEEC1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: auto;
+}
+
+#ucolor{
+    color:black;
+}
+
+#rcolor{
+    color:black;
+}
