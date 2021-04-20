@@ -2,10 +2,10 @@ const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
 const ScrapedData = require('./schema');
 
-mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongodb.net/scrapedNumbers?retryWrites=true&w=majority',
-{useNewUrlParser: true, useUnifiedTopology: true}).then(function() {
-    console.log('connected to database!')
-});
+// mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongodb.net/scrapedNumbers?retryWrites=true&w=majority',
+// {useNewUrlParser: true, useUnifiedTopology: true}).then(function() {
+//     console.log('connected to database!')
+// });
 
 async function getPageData(url,page) {
     await page.goto(url)
