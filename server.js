@@ -3,6 +3,11 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 const ScrapedData = require('./schema');
+const http = require('http');
+const socketio = require('socket.io');
+const server = http.createServer(app);
+const io = socketio(server);
+
 
 //connection to mongodb
 mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongodb.net/scrapedNumbers?retryWrites=true&w=majority',
@@ -33,7 +38,11 @@ app.post('/api', function(req, res) {
     });
 });
 
+io.on('connect', function(socket){
+    console.log('connected to socket.io!')
+})
+
 //connection to server
-app.listen(3000, function(req, res){
+server.listen(3000, function(req, res){
     console.log('server connected to port3000!')
 });

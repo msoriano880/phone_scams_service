@@ -1,3 +1,5 @@
+const socket = io.connect('http://localhost:3000');
+
 //elements
 const Phone_Number = document.querySelector('#phone_number');
 const message = document.querySelector('#message');
