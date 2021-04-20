@@ -1,6 +1,20 @@
 const socket = io.connect('http://localhost:3000');
 
-//elements
+//allows users to send message 
+socket.on('message', function(message){
+  console.log(message)
+});
+
+document.querySelector('#message-form').addEventListener('submit', function(error){
+  error.preventDefault()
+
+  const message = error.target.elements.chat.value
+
+  socket.emit('sendMessage', message)
+});
+
+
+//elements for form phone number
 const Phone_Number = document.querySelector('#phone_number');
 const message = document.querySelector('#message');
 

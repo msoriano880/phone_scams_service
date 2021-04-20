@@ -38,9 +38,23 @@ app.post('/api', function(req, res) {
     });
 });
 
+//connection to socket.io
 io.on('connect', function(socket){
     console.log('connected to socket.io!')
-})
+
+    //broadcast events
+    socket.broadcast.emit('message', 'new user joined the room!')
+
+    //server listens for the message and emits
+    socket.on('sendMessage', function(message){
+        io.emit('message', message)
+    });
+
+    //disconnects user
+    socket.on('disconnect', function(){
+        io.emit('message', 'user left the room!')    
+    });
+});
 
 //connection to server
 server.listen(3000, function(req, res){
