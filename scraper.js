@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
+const ScrapedData = require('./schema');
 
 mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongodb.net/scrapedNumbers?retryWrites=true&w=majority',
 {useNewUrlParser: true, useUnifiedTopology: true}).then(function() {
@@ -9,15 +10,22 @@ mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongod
 async function getPageData(url,page) {
     await page.goto(url)
 
-    const phonum = await page.$eval('.phone_number a', a => a.textContent)
-    const country = await page.$eval('.main-content-header h3', h3 => h3.textContent)
-    const details = await (await page.$eval('.main-content-text p', p => p.innerText))
+    const phonum = await page.$eval('.phone_number a', a => a.textContent);
+    const country = await page.$eval('.main-content-header h3', h3 => h3.textContent);
+    const details = await (await page.$eval('.main-content-text p', p => p.innerText));
+
+    const scrapedData = new ScrapedData({
+        Phone_Number: phonum,
+        VictimAndCountry: country,
+        Details: details
+    });
+    await scrapedData.save();
 
     return {
         Phone_Number: phonum,
         VictimAndCountry: country,
         Details: details
-    } 
+    };
 };
 
 async function getLinks() {
