@@ -1,4 +1,10 @@
 const puppeteer = require('puppeteer');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongodb.net/scrapedNumbers?retryWrites=true&w=majority',
+{useNewUrlParser: true, useUnifiedTopology: true}).then(function() {
+    console.log('connected to database!')
+});
 
 async function getPageData(url,page) {
     await page.goto(url)
@@ -25,7 +31,7 @@ async function getLinks() {
 };
 
 async function main() {
-    const allLinks = await getLinks();
+    const allLinks = await getLinks();i
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
     const scrapedData = [];

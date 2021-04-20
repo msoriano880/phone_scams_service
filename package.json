@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/msoriano880/phone_scams_service#readme",
   "dependencies": {
+    "mongoose": "^5.12.5",
     "puppeteer": "^8.0.0"
   }
 }
