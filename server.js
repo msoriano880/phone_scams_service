@@ -42,8 +42,14 @@ app.post('/api', function(req, res) {
 io.on('connect', function(socket){
     console.log('connected to socket.io!')
 
-    //broadcast events
-    socket.broadcast.emit('message', 'new user joined the room!')
+    //join user to specific rooms
+    socket.on('join', function({username, room}){
+        socket.join(room)
+
+        socket.emit('message', 'Welcome to this chatroom!')
+        //broadcast events
+        socket.broadcast.to(room).emit('message', `${username} has joined the room!`)
+    })
 
     //server listens for the message and emits
     socket.on('sendMessage', function(message){

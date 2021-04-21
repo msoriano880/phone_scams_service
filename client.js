@@ -1,8 +1,20 @@
 const socket = io.connect('http://localhost:3000');
 
+//elements for chatroom
+const messages = document.querySelector('#messages');
+const messageTemplate = document.querySelector('#message-template').innerHTML;
+
+const {username, room} = Qs.parse(location.search, {ignoreQueryPrefix:true})
+
 //allows users to send message 
 socket.on('message', function(message){
   console.log(message)
+  
+  //displays messages on the screen
+  const html = Mustache.render(messageTemplate, {
+    message: message
+  });
+  messages.insertAdjacentHTML('beforeend', html)
 });
 
 document.querySelector('#message-form').addEventListener('submit', function(error){
@@ -13,6 +25,8 @@ document.querySelector('#message-form').addEventListener('submit', function(erro
   socket.emit('sendMessage', message)
 });
 
+//validates username
+socket.emit('join', {username, room})
 
 //elements for form phone number
 const Phone_Number = document.querySelector('#phone_number');
