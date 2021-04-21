@@ -7,7 +7,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const server = http.createServer(app);
 const io = socketio(server);
-
+const {new_user, disconnect_user, get_user} = require('./users.js');
 
 //connection to mongodb
 mongoose.connect('mongodb+srv://msoriano:goldtree299@scrapednumbers.pyjdr.mongodb.net/scrapedNumbers?retryWrites=true&w=majority',
@@ -43,22 +43,37 @@ io.on('connect', function(socket){
     console.log('connected to socket.io!')
 
     //join user to specific rooms
-    socket.on('join', function({username, room}){
-        socket.join(room)
+    socket.on('join', function({username, room}, callback){
+        const {error, user} = new_user({id: socket.id, username, room})
+
+        if(error) {
+            return callback(error)
+        };
+
+        socket.join(user.room)
 
         socket.emit('message', 'Welcome to this chatroom!')
         //broadcast events
-        socket.broadcast.to(room).emit('message', `${username} has joined the room!`)
+        socket.broadcast.to(user.room).emit('message', `${user.username} has joined the room!`)
+
+        callback()
     })
 
     //server listens for the message and emits
     socket.on('sendMessage', function(message){
-        io.emit('message', message)
+        const user = get_user(socket.id)
+
+        io.to(user.room).emit('message', message)
     });
 
     //disconnects user
     socket.on('disconnect', function(){
-        io.emit('message', 'user left the room!')    
+        const user = disconnect_user(socket.id)
+
+        if(user) {
+            io.to(user.room).emit('message', `${user.username} left the room!`)   
+        }
+       
     });
 });
 

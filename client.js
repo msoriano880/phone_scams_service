@@ -22,11 +22,19 @@ document.querySelector('#message-form').addEventListener('submit', function(erro
 
   const message = error.target.elements.chat.value
 
+  //removes the message in the input after sending
+  error.target.elements.chat.value = ''
+  error.target.elements.chat.focus();
+
   socket.emit('sendMessage', message)
 });
 
-//validates username
-socket.emit('join', {username, room})
+socket.emit('join', {username, room}, function(error){
+  if(error) {
+    alert(error)
+    location.href = '/'
+  }
+})
 
 //elements for form phone number
 const Phone_Number = document.querySelector('#phone_number');
