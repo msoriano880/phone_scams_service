@@ -36,6 +36,10 @@ app.post('/api', function(req, res) {
     });
 });
 
+// sample compromised numbers found in the database
+// 08234567899 (indonesia)
+// 7785134298 (canada)
+
 //connection to socket.io
 io.on('connect', function(socket){
     console.log('connected to socket.io!')
