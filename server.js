@@ -27,9 +27,7 @@ app.post('/api', function(req, res) {
         .then(function(data) {
           res.json({
             status: 'success',
-            Phone_Number: data.Phone_Number,
-            VictimAndCountry: data.country,
-            Details: data.Details
+            Phone_Number: data.Phone_Number
         });
     })
     .catch(function(error) {
