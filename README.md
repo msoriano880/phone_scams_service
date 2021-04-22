@@ -8,7 +8,7 @@ d. socket.io
 
 The project runs using npm start.
 
-At this stage when the user enters a phone number it will simply return a message "TRUSTED" or "NOT TRUSTED". 
+At this stage when the user enters a phone number it will simply return a message "TRUSTED" if the number entered is not in the database or "NOT TRUSTED" if the number entered is in the database. 
 This will be improved soon by returning more details of the said number to the user.
 
 The chat feature allows the users to communicate their concerns and experiences regarding phone scams.
