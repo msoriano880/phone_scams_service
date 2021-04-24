@@ -36,6 +36,10 @@ app.post('/api', function(req, res) {
     });
 });
 
+//sample phone numbers from mongodb
+// 08234567899 Indonesia
+// 7785134298 Canada
+
 //connection to socket.io
 io.on('connect', function(socket){
     console.log('connected to socket.io!')
